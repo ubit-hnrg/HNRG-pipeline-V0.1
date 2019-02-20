@@ -1,9 +1,10 @@
 #!/bin/sh -e
 
 # These variables need to be updated with every version
-base="dbNSFP4.0b1c"                                # Database version
-dbZip="$base.zip"                               # Zip file name
-db="$base.txt"                                  # Output file
+#base="dbNSFP4.0b1c"                                # Database version
+dbZip=$1
+base=$(basename $dbZip )
+db="$base.txt"          	                        # Output file
 
 # Check dbNSFP
 if [ ! -e "$dbZip" ]
