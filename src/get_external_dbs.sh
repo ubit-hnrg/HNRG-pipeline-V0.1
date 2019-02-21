@@ -71,7 +71,7 @@ fi
 #First dbs that not change over time
 
 #omni2
-if [ -e $dbpath/$omni2file]
+if [ -e $dbpath/$omni2file ]
 then
     echo "omni2 is already in your bundle"
 else
@@ -82,7 +82,7 @@ fi
 
 
 #hamap
-if [ -e $dbpath/$hapmapVersion]
+if [ -e $dbpath/$hapmapVersion ] 
 then
     echo "hapmap is already in your bundle"
 else
@@ -93,7 +93,7 @@ fi
 
 
 #GwasCatalog  
-if [ -e $dbpath/$gwascatfile]
+if [ -e $dbpath/$gwascatfile ]
 then
     echo "gwasCatalog is already in your bundle"
 else
@@ -104,7 +104,7 @@ fi
 
 
 #EVS
-if [ -e $dbpath/$evsfile]
+if [ -e $dbpath/$evsfile ]
 then
     echo "EVS database is already in your bundle"
 else
@@ -115,7 +115,7 @@ fi
 
 # DBs that are continuously updated
 ## snpEFF
-if [ -e $dbpath/snpEFF]
+if [ -e $dbpath/snpEFF ]
 then
     echo "snpEff annotation tool is already updated"
 else
@@ -130,7 +130,7 @@ fi
 
 
 #dbNSFP 
-if [ -e $dbpath/dbNSFP$dbNSFPversion'.gz'|]
+if [ -e $dbpath/dbNSFP$dbNSFPversion'.gz' ]
 then
     echo "dbNSFP database is already updated"
 else
@@ -144,7 +144,7 @@ fi
 
 
 #CADD
-if [ -e $dbpath/$caddfile]
+if [ -e $dbpath/$caddfile ]
 then
     echo "CADD database is already updated"
 else
@@ -156,7 +156,7 @@ fi
 
 #CLINVAR
 #CADD
-if [ -e $dbpath/$caddfile]
+if [ -e $dbpath/$caddfile ]
 then
     echo "Clinvar is already updated"
 else
@@ -167,7 +167,7 @@ fi
 
 
 #ExAC
-if [ -e $dbpath/$ExACfile]
+if [ -e $dbpath/$ExACfile ]
 then
     echo "ExAC database tool is already updated"
 else
