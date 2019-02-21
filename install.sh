@@ -24,10 +24,10 @@ dbsnp_b37_vcf='ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VC
 #######################################
 installation_path=$(realpath ./)
 
-mkdir -p $installation_path/$pipelineVersion/tools/
-mkdir $installation_path/$pipelineVersion/references/
-mkdir $installation_path/$pipelineVersion/libraries/
-mkdir $installation_path/$pipelineVersion/dbs/
+#mkdir -p $installation_path/$pipelineVersion/tools/
+#mkdir $installation_path/$pipelineVersion/references/
+#mkdir $installation_path/$pipelineVersion/libraries/
+#mkdir $installation_path/$pipelineVersion/dbs/
 
 src_path=$installation_path/$pipelineVersion/src
 tool_path=$installation_path/$pipelineVersion/tools
