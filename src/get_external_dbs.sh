@@ -37,6 +37,10 @@ evsDB='http://evs.gs.washington.edu/evs_bulk_data/'$evsfile
 dbsnp_version='All_20180423.vcf.gz'
 dbsnp_b37_vcf='ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VCF/'$dbsnp_version
 
+
+snpEff_file='snpEff_latest_core.zip'
+snpEff='http://sourceforge.net/projects/snpeff/files/'$snpEff_file
+
 #dbNSFP 
 dbNSFPversion='4.0b1a'
 dbNSFPzipfile='dbNSFP'$dbNSFPversion'.zip'
@@ -115,7 +119,7 @@ fi
 
 # DBs that are continuously updated
 ## snpEFF
-if [ -e $dbpath/snpEFF ]
+if [ -e $dbpath/snpEFF/snpEff.jar ]
 then
     echo "snpEff annotation tool is already updated"
 else
