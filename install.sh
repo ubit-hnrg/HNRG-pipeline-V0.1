@@ -29,9 +29,9 @@ installation_path=$(realpath ./)
 #mkdir $installation_path/$pipelineVersion/libraries/
 #mkdir $installation_path/$pipelineVersion/dbs/
 
-src_path=$installation_path/$pipelineVersion/src
-tool_path=$installation_path/$pipelineVersion/tools
-dbpath=$installation_path/$pipelineVersion/dbs
+src_path=$installation_path/src
+tool_path=$installation_path/tools
+dbpath=$installation_path/dbs
 
 
 #########################################################
@@ -102,8 +102,8 @@ mv './bwa.kit/' $tool_path/
 ln -rs $tool_path/bwa.kit/bwa $tool_path/  # create link to binary
 $tool_path/bwa.kit/run-gen-ref hs37d5      # get reference
 $tool_path/bwa.kit/bwa index hs37d5.fa     # build indices
-mkdir $installation_path/$pipelineVersion/references/hs37d5/ 
-mv hs37d5* $installation_path/$pipelineVersion/references/hs37d5/ # move indices to refernce path
+mkdir $installation_path/references/hs37d5/ 
+mv hs37d5* $installation_path/references/hs37d5/ # move indices to refernce path
 
 #fastp 
 wget $fastp -P $tool_path/
