@@ -22,7 +22,7 @@ dbsnp_b37_vcf='ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VC
 #######################################
 #######   directory structure  ########
 #######################################
-installation_path=$(realpath ./)
+installation_path=$(readlink -f ./)
 
 #mkdir -p $installation_path/$pipelineVersion/tools/
 #mkdir $installation_path/$pipelineVersion/references/
