@@ -13,7 +13,7 @@ gatklink='https://github.com/broadinstitute/gatk/releases/download/'$gatkVersion
 
 #minimal required dbs
 #indels Mills&1000G
-Mils_1000G_b37_vcf='ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.gz'                # required for preprocessing
+Mils_1000G_b37_vcf='ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold_standard.indels.b37.vcf'                # required for preprocessing
 #dbsnp b37
 dbsnp_b37_vcf='ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VCF/All_20180423.vcf.gz'
 
@@ -111,14 +111,15 @@ chmod a+x $tool_path/fastp
 
 # dbs (for preprocessing & annotation prouposes)
 
-wget $Mils_1000G_b37_vcf -P $dbpath/       # for preprocessing
-wget $Mils_1000G_b37_vcf'.idx' -P $dbpath/
+wget $Mils_1000G_b37_vcf'.gz' -P $dbpath/       # for preprocessing
+wget $Mils_1000G_b37_vcf'.idx.gz' -P $dbpath/
 
 # dbSNP 
+echo  'downloading dbSNP (at less 15gb), take a coffe.'
 wget $dbsnp_b37_vcf -P $dbpath/            # for preprocessing
 wget $dbsnp_b37_vcf'.tbi' -P $dbpath/
 
 
 ### For annotation prouposes
-#$src_path/get_external_dbs.sh $installation_path/$pipelineVersion
+$src_path/get_external_dbs.sh $installation_path
 

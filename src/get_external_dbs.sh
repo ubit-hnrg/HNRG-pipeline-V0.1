@@ -47,7 +47,8 @@ caddfile='whole_genome_SNVs.tsv.gz'
 cadd='https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/'$caddfile
 
 #Clinvar
-clinvar='ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz'
+clinvarfile='clinvar_20190219.vcf.gz'
+clinvar='ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/'$clinvarfile
 
 #ExAC
 ExACfile='ExAC.r1.sites.vep.vcf.gz'
@@ -55,10 +56,11 @@ ExAC='ftp://ftp.broadinstitute.org/pub/ExAC_release/release1/'$ExACfile
 
 
 # dbSNP 
-if [ -e $dbsnp_version]
+if [ -e $dbpath/$dbsnp_version ]
 then
     echo "dbSNP is already in your bundle"
 else
+    echo 'Downloading dbSNP'
     wget $dbsnp_b37_vcf -P $dbpath/
     wget $dbsnp_b37_vcf'.tbi' -P $dbpath/
 fi
@@ -73,6 +75,7 @@ if [ -e $dbpath/$omni2file]
 then
     echo "omni2 is already in your bundle"
 else
+    echo 'downloading omni2'
     wget $omni2_1000G -P $dbpath/
     wget $omni2_1000G'.tbi' -P $dbpath/
 fi
@@ -83,6 +86,7 @@ if [ -e $dbpath/$hapmapVersion]
 then
     echo "hapmap is already in your bundle"
 else
+    echo 'downloading hapmap'
     wget $hapmap'.gz' -P $dbpath/
     wget $hapmap'.idx.gz' -P $dbpath/
 fi
@@ -93,6 +97,7 @@ if [ -e $dbpath/$gwascatfile]
 then
     echo "gwasCatalog is already in your bundle"
 else
+    echo 'downloading hapmap'
     wget $gwascat -P $dbpath/
 #    ln -s $dbpath/'gwascatalog.txt' $dbpath/snpEff/
 fi
@@ -103,6 +108,7 @@ if [ -e $dbpath/$evsfile]
 then
     echo "EVS database is already in your bundle"
 else
+    echo 'downloading EVS database'
     wget $evsDB -P $dbpath/
 fi
 
@@ -113,6 +119,7 @@ if [ -e $dbpath/snpEFF]
 then
     echo "snpEff annotation tool is already updated"
 else
+    echo 'installing snpEff'
     wget $snpEff -P $dbpath
     unzip $dbpath/snpEff_latest_core.zip  -d $dbpath 
     ln -rs $dbpath/snpEff/SnpSift.jar $tool_path/ 
@@ -127,6 +134,8 @@ if [ -e $dbpath/dbNSFP$dbNSFPversion'.gz'|]
 then
     echo "dbNSFP database is already updated"
 else
+    echo 'installing dbNSFP'
+    echo 'take a coffe'
     cd $dbpath
     ln -s $src_path/make_dbNSFP.sh $dbpath/
     wget $dbNSFP -P $dbpath/
@@ -139,14 +148,22 @@ if [ -e $dbpath/$caddfile]
 then
     echo "CADD database is already updated"
 else
+    echo 'Downloading CADD. This is abuot 78GB for download. Take it easy'
     wget $cadd -P $dbpath/
     wget $cadd.tbi -P $dbpath/
 fi
 
 
 #CLINVAR
-wget $clinvar -P $dbpath/
-wget $clinvar.tbi -P $dbpath/
+#CADD
+if [ -e $dbpath/$caddfile]
+then
+    echo "Clinvar is already updated"
+else
+    echo 'Downloading Clinvar'
+    wget $clinvar -P $dbpath/
+    wget $clinvar.tbi -P $dbpath/
+fi
 
 
 #ExAC
@@ -154,6 +171,7 @@ if [ -e $dbpath/$ExACfile]
 then
     echo "ExAC database tool is already updated"
 else
+    echo 'Downloading ExAC'
     wget $ExAC -P $dbpath/
     wget $ExAC.tbi -P $dbpath/
 fi
