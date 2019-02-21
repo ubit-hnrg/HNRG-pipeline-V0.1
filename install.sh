@@ -99,9 +99,10 @@ unzip -p $tool_path/$gatkzip $folder/$jarname > $tool_path/$jarname # extract on
 #bwa + reference building
 cd $tool_path
 wget -O- $bwakit |tar xjf - # get bwa-kit
-ln -rs bwa.kit/bwa .            # create link to binary
-bwa.kit/run-gen-ref hs37d5      # get reference
-bwa.kit/bwa index hs37d5.fa     # build indices
+mv bwa.kit $tool_path/
+ln -rs $tool_path/bwa.kit/bwa $tool_path/  # create link to binary
+$tool_path/bwa.kit/run-gen-ref hs37d5      # get reference
+$tool_path/bwa.kit/bwa index hs37d5.fa     # build indices
 mkdir $installation_path/$pipelineVersion/references/hs37d5/ 
 mv hs37d5* $installation_path/$pipelineVersion/references/hs37d5/ # move indices to refernce path
 
