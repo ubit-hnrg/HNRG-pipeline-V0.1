@@ -18,6 +18,8 @@ Mils_1000G_b37_vcf='ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
 dbsnp_b37_vcf='ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VCF/All_20180423.vcf.gz'
 
 
+# for bgzip, tabix
+bhtslib='https://github.com/samtools/htslib/releases/download/1.9/htslib-1.9.tar.bz2'
 
 #######################################
 #######   directory structure  ########
@@ -77,6 +79,9 @@ else
     sudo apt install python2.7 python-pip
 fi
 
+### INSTALL HTSLIB!!!! 
+wget $bhtslib
+#descomprimir y compilar!!!
 
 
 ################################################

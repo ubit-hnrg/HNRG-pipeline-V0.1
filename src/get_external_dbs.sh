@@ -42,7 +42,7 @@ snpEff_file='snpEff_latest_core.zip'
 snpEff='http://sourceforge.net/projects/snpeff/files/'$snpEff_file
 
 #dbNSFP 
-dbNSFPversion='4.0b1a'
+dbNSFPversion='4.0b1c'
 dbNSFPzipfile='dbNSFP'$dbNSFPversion'.zip'
 dbNSFP='ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/'$dbNSFPzipfile
 
@@ -141,7 +141,7 @@ else
     echo 'installing dbNSFP'
     echo 'take a coffe'
     cd $dbpath
-    ln -s $src_path/make_dbNSFP.sh $dbpath/
+    ln -s $src_path/make_dbNSFP.sh $dbpath/make_dbNSFP.sh
     wget $dbNSFP -P $dbpath/
     $dbpath/make_dbNSFP.sh $dbpath/$dbNSFPzipfile
 fi
