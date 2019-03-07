@@ -31,10 +31,10 @@
   
 
   "##COMMENT5": "interval lists",
-  "main_workflow.wgs_evaluation_interval_list": "__installation_path__/libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list.gz",
-  "main_workflow.unpadded_intervals_file": "__installation_path__/libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list.gz",
-  "main_workflow.wgs_calling_interval_list": "__installation_path__/libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list.gz",
-  "main_workflow.wes_calling_interval_list": "__installation_path__/libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list.gz",
+  "main_workflow.wgs_evaluation_interval_list": "__installation_path__/libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list",
+  "main_workflow.unpadded_intervals_file": "__installation_path__/libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list",
+  "main_workflow.wgs_calling_interval_list": "__installation_path__/libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list",
+  "main_workflow.wes_calling_interval_list": "__installation_path__/libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list",
   
 
   "##COMMENT6": "HAPLOTYPECALLER PARAMETERS",
