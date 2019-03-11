@@ -3,6 +3,7 @@
 installation_path=$(readlink -f ./)
 verbose=0
 skip_build_reference=0
+annotation_dbs=0
 
 while :; do
      case $1 in
@@ -31,6 +32,9 @@ while :; do
          -s|--skip_build_reference)
              skip_build_reference=1  # Each -v adds 1 to verbosity.
              ;;
+         -a|--annotation_dbs)
+             annotation_dbs=1  # Each -v adds 1 to verbosity.
+             ;;
 
          --)              # End of all options.
              shift
@@ -56,7 +60,7 @@ bwakit='http://sourceforge.net/projects/bio-bwa/files/bwakit/bwakit-0.7.15_x64-l
 fastp='http://opengene.org/fastp/fastp'
 
 # GATK version
-gatkVersion='4.0.6.0'
+gatkVersion='4.1.0.0'
 gatklink='https://github.com/broadinstitute/gatk/releases/download/'$gatkVersion'/gatk-'$gatkVersion'.zip'
 
 #minimal required dbs
@@ -210,7 +214,10 @@ wget $dbsnp_b37_vcf'.tbi' -P $dbpath/
 
 
 ### For annotation prouposes
+if(($annotation_dbs == '1'))
+then
 $src_path/get_external_dbs.sh $installation_path
+fi
 
 ### WDL input_main.json generation
 sed -e "s|__installation_path__|$installation_path|g" $installation_path/src/wdl/template_inputs_main.json > $installation_path/src/wdl/inputs_main.json
