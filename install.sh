@@ -1,5 +1,53 @@
 #!/bin/bash
 
+installation_path=$(readlink -f ./)
+verbose=0
+skip_build_reference=0
+
+while :; do
+     case $1 in
+         -h|-\?|--help)
+             echo show_help    # Display a usage synopsis.
+             exit
+             ;;
+         -v|--verbose)
+             verbose=$((verbose + 1))  # Each -v adds 1 to verbosity.
+             ;;
+         -p|--path)       # Takes an option argument; ensure it has been specified.
+             if [ "$2" ]; then
+                 installation_path=$2
+                 shift
+             else
+                 die 'ERROR: "--path" requires a non-empty option argument.'
+             fi
+             ;;
+         --path=?*)
+             installation_path=${1#*=} # Delete everything up to "=" and assign the remainder.
+             ;;
+         --path=)         # Handle the case of an empty --file=
+             die 'ERROR: "--path" requires a non-empty option argument.'
+             ;;
+
+         -s|--skip_build_reference)
+             skip_build_reference=1  # Each -v adds 1 to verbosity.
+             ;;
+
+         --)              # End of all options.
+             shift
+             break
+             ;;
+         -?*)
+             printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
+             ;;
+         *)               # Default case: No more options, so break out of the loop.
+             break
+     esac
+ 
+         shift
+done
+ 
+
+
 pipelineVersion="HNRG-pipeline-V0.1"
 #tools
 cromwell='https://github.com/broadinstitute/cromwell/releases/download/37/cromwell-37.jar'
@@ -13,18 +61,24 @@ gatklink='https://github.com/broadinstitute/gatk/releases/download/'$gatkVersion
 
 #minimal required dbs
 #indels Mills&1000G
-Mils_1000G_b37_vcf='ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold_standard.indels.b37.vcf'                # required for preprocessing
+Mils_1000G_b37_vcf_file='Mills_and_1000G_gold_standard.indels.b37.vcf'
+Mils_1000G_b37_vcf='ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/'$Mils_1000G_b37_vcf_file                # required for preprocessing
 #dbsnp b37
 dbsnp_b37_vcf='ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VCF/All_20180423.vcf.gz'
 
-
+https://github.com/samtools/bcftools/releases/download/1.9/bcftools-1.9.tar.bz2
 # for bgzip, tabix
-bhtslib='https://github.com/samtools/htslib/releases/download/1.9/htslib-1.9.tar.bz2'
+htslib_version='1.9'
+
+htslibfile='htslib-'$htslib_version'.tar.bz2'
+htslib='https://github.com/samtools/htslib/releases/download/'$htslib_version/$htslibfile
+samtoolsfile='samtools-'$htslib_version'.tar.bz2'
+samtools='https://github.com/samtools/samtools/releases/download/'$htslib_version/$samtoolsfile
 
 #######################################
 #######   directory structure  ########
 #######################################
-installation_path=$(readlink -f ./)
+
 
 #mkdir -p $installation_path/$pipelineVersion/tools/
 #mkdir $installation_path/$pipelineVersion/references/
@@ -79,14 +133,32 @@ else
     sudo apt install python2.7 python-pip
 fi
 
-### INSTALL HTSLIB!!!! 
-wget $bhtslib
-#descomprimir y compilar!!!
 
 
 ################################################
 ######   local installations (tools).   ########
 ################################################
+
+### INSTALL HTSLIB!!!! 
+wget -O- $htslib |tar xjf -
+mv htslib-$htslib_version $tool_path
+cd $tool_path/htslib-$htslib_version
+./configure
+sudo make
+sudo make install
+ln -sr $tool_path/htslib-$htslib_version/bgzip $tool_path
+ln -sr $tool_path/htslib-$htslib_version/tabix $tool_path
+
+#descomprimir y compilar!!!
+
+wget -O- $samtools |tar xjf -
+mv samtools-$htslib_version $tool_path
+cd $tool_path/samtools-$htslib_version
+./configure --without-curses --prefix=$tool_path
+sudo make
+sudo make install
+ln -sr $tool_path/samtools-$htslib_version/samtools $tool_path
+
 
 # cromwell
 wget $cromwell -P $tool_path 
@@ -105,10 +177,19 @@ unzip -p $tool_path/$gatkzip $folder/$jarname > $tool_path/$jarname # extract on
 wget -O- $bwakit |tar xjf - # get bwa-kit
 mv './bwa.kit/' $tool_path/
 ln -rs $tool_path/bwa.kit/bwa $tool_path/  # create link to binary
-$tool_path/bwa.kit/run-gen-ref hs37d5      # get reference
-$tool_path/bwa.kit/bwa index hs37d5.fa     # build indices
-mkdir $installation_path/references/hs37d5/ 
-mv hs37d5* $installation_path/references/hs37d5/ # move indices to refernce path
+
+
+if(($skip_build_reference == '0'))
+then
+    $tool_path/bwa.kit/run-gen-ref hs37d5      # get reference
+    $tool_path/bwa.kit/bwa index hs37d5.fa     # build indices
+    mkdir $installation_path/references/hs37d5/ 
+    mv hs37d5* $installation_path/references/hs37d5/ # move indices to refernce path
+elif
+    $echo 'WARNING SKIPING BUILD REFERENCE'
+
+gzip -dk $installation_path/libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list.gz
+
 
 #fastp 
 wget $fastp -P $tool_path/
@@ -117,7 +198,10 @@ chmod a+x $tool_path/fastp
 # dbs (for preprocessing & annotation prouposes)
 
 wget $Mils_1000G_b37_vcf'.gz' -P $dbpath/       # for preprocessing
-wget $Mils_1000G_b37_vcf'.idx.gz' -P $dbpath/
+gzip -d $dbpath/$Mils_1000G_b37_vcf_file'.gz'
+$toolpath/bgzip $dbpath/$Mils_1000G_b37_vcf_file
+$toolpath/tabix $dbpath/$Mils_1000G_b37_vcf_file'.gz'
+#wget $Mils_1000G_b37_vcf'.idx.gz' -P $dbpath/
 
 # dbSNP 
 echo  'downloading dbSNP (at less 15gb), take a coffe.'
@@ -128,3 +212,7 @@ wget $dbsnp_b37_vcf'.tbi' -P $dbpath/
 ### For annotation prouposes
 $src_path/get_external_dbs.sh $installation_path
 
+### WDL input_main.json generation
+sed -e "s|__installation_path__|$installation_path|g" $installation_path/src/wdl/template_inputs_main.json > $installation_path/src/wdl/inputs_main.json
+#sudo java -jar ./tools/gatk-package-4.0.6.0-local.jar BedToIntervalList -I=./libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.bed.gz -O=./libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list -SD=references/hs37d5/hs37d5.fa.dict
+#sudo java -jar ./tools/gatk-package-4.0.6.0-local.jar CreateSequenceDictionary --REFERENCE=./references/hs37d5/hs37d5.fa --OUTPUT=hs37d5.dict
