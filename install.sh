@@ -60,7 +60,7 @@ bwakit='http://sourceforge.net/projects/bio-bwa/files/bwakit/bwakit-0.7.15_x64-l
 fastp='http://opengene.org/fastp/fastp'
 
 # GATK version
-gatkVersion='4.1.0.0'
+gatkVersion='4.1..0'
 gatklink='https://github.com/broadinstitute/gatk/releases/download/'$gatkVersion'/gatk-'$gatkVersion'.zip'
 
 #minimal required dbs
@@ -191,7 +191,7 @@ then
     mv hs37d5* $installation_path/references/hs37d5/ # move indices to refernce path
 elif
     $echo 'WARNING SKIPING BUILD REFERENCE'
-
+fi
 gzip -dk $installation_path/libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list.gz
 
 
