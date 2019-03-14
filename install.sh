@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 installation_path=$(readlink -f ./)
 verbose=0
@@ -205,8 +206,8 @@ chmod a+x $tool_path/fastp
 
 wget $Mils_1000G_b37_vcf'.gz' -P $dbpath/       # for preprocessing
 gzip -d $dbpath/$Mils_1000G_b37_vcf_file'.gz'
-$toolpath/bgzip $dbpath/$Mils_1000G_b37_vcf_file
-$toolpath/tabix $dbpath/$Mils_1000G_b37_vcf_file'.gz'
+$tool_path/bgzip $dbpath/$Mils_1000G_b37_vcf_file
+$tool_path/tabix $dbpath/$Mils_1000G_b37_vcf_file'.gz'
 #wget $Mils_1000G_b37_vcf'.idx.gz' -P $dbpath/
 
 # dbSNP 
