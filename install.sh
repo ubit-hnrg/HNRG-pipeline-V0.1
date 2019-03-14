@@ -166,8 +166,6 @@ sudo make
 sudo make install
 ln -sr $tool_path/samtools-$htslib_version/samtools $tool_path
 
-exit
-
 # cromwell
 wget $cromwell -P $tool_path 
 # wdltool 
