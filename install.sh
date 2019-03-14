@@ -192,7 +192,7 @@ then
     #mkdir $installation_path/references/hs37d5/ 
     mv hs37d5* $installation_path/references/hs37d5/ # move indices to refernce path
 else
-    $echo 'WARNING SKIPING BUILD REFERENCE'
+    echo 'WARNING SKIPING BUILD REFERENCE'
 fi
 gzip -dk $installation_path/libraries/GRCh37/S07604624_SureSelectHumanAllExonV6+UTRs_Padded_GRCh37.interval_list.gz
 
