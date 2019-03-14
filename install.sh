@@ -71,7 +71,6 @@ Mils_1000G_b37_vcf='ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
 #dbsnp b37
 dbsnp_b37_vcf='ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VCF/All_20180423.vcf.gz'
 
-https://github.com/samtools/bcftools/releases/download/1.9/bcftools-1.9.tar.bz2
 # for bgzip, tabix
 htslib_version='1.9'
 
