@@ -133,11 +133,14 @@ else
     sudo apt install python2.7 python-pip
 fi
 
+## prerequisite for samtools and htslib.
+sudo apt-get install zlib1g-dev
 
 
 ################################################
 ######   local installations (tools).   ########
 ################################################
+
 
 ### INSTALL HTSLIB!!!! 
 wget -O- $htslib |tar xjf -
@@ -154,11 +157,12 @@ ln -sr $tool_path/htslib-$htslib_version/tabix $tool_path
 wget -O- $samtools |tar xjf -
 mv samtools-$htslib_version $tool_path
 cd $tool_path/samtools-$htslib_version
-./configure --without-curses --prefix=$tool_path
+./configure --without-curses
 sudo make
 sudo make install
 ln -sr $tool_path/samtools-$htslib_version/samtools $tool_path
 
+exit
 
 # cromwell
 wget $cromwell -P $tool_path 
