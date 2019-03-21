@@ -61,7 +61,7 @@ bwakit='http://sourceforge.net/projects/bio-bwa/files/bwakit/bwakit-0.7.15_x64-l
 fastp='http://opengene.org/fastp/fastp'
 
 # GATK version
-gatkVersion='4.1.0.0'
+gatkVersion='4.0.8.1'
 gatklink='https://github.com/broadinstitute/gatk/releases/download/'$gatkVersion'/gatk-'$gatkVersion'.zip'
 
 #minimal required dbs
